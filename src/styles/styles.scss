@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+$black: #1A141F;
+$white: #FCFCFC;
+$blue: #0F0BAB;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+button{
+    font-family: 'Roboto', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.container{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.header{
+    padding: 16px 0;
+    .container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 48px;
+    }
+
+    &__logo{
+        height: 42px;
+        width: 172px;
+        background: url(../img/logo.svg) no-repeat center / contain;
+    }
+
+    &__btns{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 24px;
+        a{
+            width: 100%;
+            max-width: 170px;
+            text-align: center;
+            display: block;
+            padding: 8px;
+            background: $black;
+            border-radius: 4px;
+            color: $white;
+            border:  none;
+            transition: .15s;
+            &:not(.disabled):hover{
+                background-color: $blue;
+                transition: .15s;
+            }
+            &.disabled{
+                background-color: #E5E5E5;
+                transition: .15s;
+                pointer-events: none;
+            }
+
+            &._fill.disabled{
+                pointer-events: auto;
+            }
+        }
+
+        ._history{
+            display: none;
+
+            &.visible{
+                display: block;
+            }
+        }
+    }
+}
+
+.cards{
+    &__content{
+        // display: grid;
+        // grid-template-columns: repeat(5, 1fr);
+        // grid-template-columns: repeat(autofill, 1fr);
+        // grid-template-rows: repeat(3);
+        // grid-row-gap: 8px;
+        // grid-column-gap: 8px;
+
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin: 0 auto;
+    }
+    &__item:first-child:nth-last-child(1),
+    &__item:first-child:nth-last-child(2),
+    &__item:first-child:nth-last-child(2) ~ &__item,
+    &__item:first-child:nth-last-child(3),
+    &__item:first-child:nth-last-child(3) ~ &__item,
+    &__item:first-child:nth-last-child(4),
+    &__item:first-child:nth-last-child(4) ~ &__item{
+        margin: 0 auto;
+    }
+
+    &__item{
+        position: relative;
+        width: 100%;
+        max-width: 297px;
+        min-height: 434px;
+        overflow: hidden;
+        padding: 16px;
+        background: #F9F9F9;
+
+        &__trash{
+            text-align: right;
+            margin-bottom: 45px;
+            svg{
+                height: 25px;
+                width: auto;
+                path{
+                    stroke: $black;
+                    transition: .15s;
+                }
+                &:hover{
+                    path{
+                        stroke: $blue;
+                        transition: .15s;
+                    }
+                }
+            }
+        }
+        
+        &__image{
+            margin-bottom: 28px;
+            img{
+                width: 100%;
+                height: auto;
+            }
+        }
+
+
+        &__heading{
+            h3{
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 134%;
+                color: $black;
+            }
+        }
+        
+        &__info{
+            margin: 8px 0 20px;
+        }
+        
+        &__text{
+            color: $black;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        &__open-modal{
+            a{
+                padding: 8px 16px;
+                border: 1px solid $black;
+                border-radius: 4px;
+                text-decoration: none;
+                color: $black;
+                transition: .15s;
+
+                &:hover{
+                    background: $blue;
+                    color: $white;
+                    border: 1px solid rgba(0, 0, 0, 0);
+                    transition: .15s;
+                }
+            }
+        }        
+
+        &__preloader{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+            div{
+               height: 50px;
+               width: 50px;
+               border-radius: 100px;
+               border: 5px solid rgb(255, 206, 100);
+               border-top: 5px solid rgba(0, 0, 0, 0);
+               animation: preloader 2s linear infinite;
+            }
+        }
+
+        &.loading{
+            .cards__item__content{
+                display: none;
+            }
+
+            .cards__item__preloader{
+                display: flex;
+            }
+        }
+    }
+}
+
+.modal{
+    display: none;
+    position: relative;
+    z-index: 3;
+
+    
+    &-wrapper{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        color: $black;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 3;
+    }
+
+
+    &__content{
+        max-height: 100%;
+        overflow-y: auto;
+        width: 100%;
+        max-width: 800px;
+        background-color: #fff;
+        position: relative;
+        padding: 24px;
+        z-index: 4;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
+    }
+
+    &__logo{
+        margin-bottom: 24px;
+        height: 42px;
+        width: 140px;
+        background: url(../img/logo.svg) no-repeat center / contain;
+    }
+
+    &__close{
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        cursor: pointer;
+        height: 16px;
+        width: 16px;
+        background: url(../img/close.svg) no-repeat center / cover;
+    }
+
+    &__heading{
+        margin-bottom: 16px;
+        h3{
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 24px;
+        }
+    }
+
+    &__text{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        p{
+            margin-bottom: 12px;
+        }
+
+        a{
+            transition: .1s;
+            &:hover{
+                text-decoration: underline;
+                transition: .1s;
+            }
+        }
+    }
+}
+
+@keyframes preloader {
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

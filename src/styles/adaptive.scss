@@ -1,0 +1,32 @@
+@media (max-width: 768px){
+    .header{
+        .container{
+            flex-direction: column;
+            gap: 24px;
+        }
+    }
+}
+
+@media (max-width: 576px){
+    .header{
+        &__btns{
+            flex-direction: column;
+            gap: 24px;
+            ._fill{
+                display: none;
+            }
+        }
+    }
+
+    .cards{
+        &__content{
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: space-between;
+        }
+        &__item{
+            width: 100vw;
+            min-width: 100%;
+        }
+    }
+}
